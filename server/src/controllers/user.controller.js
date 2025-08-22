@@ -1,5 +1,7 @@
-const getAllUsers = (req, res) => {
-    res.send("<h1>Hello Users!</h1>")
-}
+const User = require('../models/user.model');
+const factory = require('../utils/handlerFactory');
 
-module.exports = getAllUsers
+const getAllUsers = factory.getAll(User)
+
+
+module.exports = {getAllUsers}

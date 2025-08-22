@@ -2,7 +2,7 @@ const {model, Schema} = require("mongoose");
 
 const productSchema = new Schema(
     {
-        name: {
+        title: {
             type: String,
             required: [true, "Product name is required"],
             trim: true,
@@ -54,12 +54,12 @@ const productSchema = new Schema(
         },
         subcategories: [
             {
-                type: mongoose.Schema.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref: 'SubCategory',
             }
         ],
         brand: {
-            type: mongoose.Schema.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Brand'
         },
         ratingsAverage: {

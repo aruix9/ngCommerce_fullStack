@@ -1,6 +1,6 @@
 const {model, Schema} = require("mongoose")
-const bcrypt = requie("bcrypt");
-const jwt = require("jwt");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new Schema(
     {
@@ -38,11 +38,11 @@ const userSchema = new Schema(
             default: true,
         },
         wishlist: [{
-            type: mongoose.Schema.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Product',
         }],
         addresses: [{
-            id: { type: mongoose.Schema.Types.ObjectId },
+            id: { type: Schema.Types.ObjectId },
             alias: String,
             details: String,
             phone: String,

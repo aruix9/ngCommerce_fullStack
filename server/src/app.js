@@ -1,9 +1,9 @@
 const express = require("express")
-const userRoutes = require("./routes/user.routes.js")
+const mountRoutes = require('./routes')
 
 const app = express()
 
 // api routes
-app.use("/api/v1/users", userRoutes)
+mountRoutes(app)
 
 module.exports = app

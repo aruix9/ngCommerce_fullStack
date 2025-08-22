@@ -12,13 +12,13 @@ const reviewScehma = new Schema(
             required: [true, 'Ratings is required'],
         },
         user: {
-            type: mongoose.Schema.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User',
             required: [true, 'Review must belong to a user'],
         },
         // parent reference (one to many)
         product: {
-            type: mongoose.Schema.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Product',
             required: [true, 'Review must belong to a product'],
         },

@@ -3,14 +3,14 @@ const {model, Scehma} = require("mongoose")
 const orderSchema = new mongoose.Schema(
     {
         user: {
-            type: mongoose.Schema.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User',
             required: [true, 'Order must be belong to user'],
         },
         cartItems: [
             {
                 product: {
-                    type: mongoose.Schema.ObjectId,
+                    type: Schema.Types.ObjectId,
                     ref: 'Product',
                 },
                 quantity: Number,
