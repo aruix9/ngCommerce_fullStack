@@ -18,7 +18,7 @@ const userSchema = new Schema(
             unique: true
         },
         phone: String,
-        profileImage: String,
+        profileImg: String,
         password: {
             type: String,
             required: [true, "Password is required"],
@@ -58,7 +58,6 @@ const userSchema = new Schema(
 
 // hash password before save
 userSchema.pre("save", async function(next) {
-    // check if password is modified
     if(!this.isModified("password")) return next();
 
     // hash password

@@ -6,13 +6,11 @@ const {
 const {
 } = require("../middlewares/uploadImage.middleware")
 const {
-//   getBrandValidator,
+  getBrandValidator,
   createBrandValidator,
-//   updateBrandValidator,
-//   deleteBrandValidator,
+  updateBrandValidator,
+  deleteBrandValidator,
 } = require('../utils/validators/brand.validator');
-
-const authService = require('../controllers/auth.controller');
 
 const {
   getBrands,
@@ -38,22 +36,23 @@ router
       createBrand
     )
     .get(getBrands)
-// router
-//   .route('/:id')
-//   .get(getBrandValidator, getBrand)
-//   .put(
-//     authService.protect,
-//     authService.allowedTo('admin', 'manager'),
-//     uploadBrandImage,
-//     resizeImage,
-//     updateBrandValidator,
-//     updateBrand
-//   )
-//   .delete(
-//     authService.protect,
-//     authService.allowedTo('admin'),
-//     deleteBrandValidator,
-//     deleteBrand
-//   );
+
+router
+  .route('/:id')
+  .get(getBrandValidator, getBrand)
+  .put(
+    isLoggedIn,
+    accessRouteAs('admin', 'manager'),
+    uploadBrandImage,
+    resizeImage,
+    updateBrandValidator,
+    updateBrand
+  )
+  .delete(
+    isLoggedIn,
+    accessRouteAs('admin'),
+    deleteBrandValidator,
+    deleteBrand
+  );
 
 module.exports = router;

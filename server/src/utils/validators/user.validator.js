@@ -69,8 +69,7 @@ exports.updateUserValidator = [
       return true;
     }),
   check('email')
-    .notEmpty()
-    .withMessage('Email required')
+    // .withMessage('Email required')
     .isEmail()
     .withMessage('Invalid email address')
     .custom((val) =>
@@ -107,10 +106,7 @@ exports.changeUserPasswordValidator = [
       if (!user) {
         throw new Error('There is no user for this id');
       }
-      const isCorrectPassword = await bcrypt.compare(
-        req.body.currentPassword,
-        user.password
-      );
+      const isCorrectPassword = await user.isPasswordCorrect(req.body.currentPassword);
       if (!isCorrectPassword) {
         throw new Error('Incorrect current password');
       }

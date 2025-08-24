@@ -36,6 +36,14 @@ exports.isLoggedIn = asyncHandler(async (req, res, next) => {
     next();
 })
 
+// @desc    Get Logged user data
+// @route   GET /api/v1/users/getMe
+// @access  Private/Protect
+exports.getLoggedUserData = asyncHandler(async (req, res, next) => {
+  req.params.id = req.user._id;
+  next();
+});
+
 // @desc    Authorization (User Permissions)
 // ["admin", "manager"]
 exports.accessRouteAs = (...roles) => 
