@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const DB_NAME = require("./../constants.js")
+const {DB_NAME} = require("./../constants.js")
 
 const connectDB = async () => {
     try {
@@ -7,7 +7,7 @@ const connectDB = async () => {
         console.log(`\nDB connected!! DB HOST ${connectionInstance.connection.host}`)
     } catch (error) {
         console.log(`DB connection FAILED ${error}`);
-        priocess.exit(1);
+        process.exit(1);
     }
 }
 

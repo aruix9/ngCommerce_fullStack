@@ -1,4 +1,8 @@
-const DB_NAME = "ngcommerce";
+const DB_NAME = "ngCommerceFullStack";
+const cookieOptions = {
+    httpOnly: true,
+    secure: true
+}
 
 
-module.exports = { DB_NAME };
+module.exports = {DB_NAME, cookieOptions};

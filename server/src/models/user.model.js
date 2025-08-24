@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const userSchema = new Schema(
     {
-        fullName: {
+        name: {
             type: String,
             required: [true, "Full name is required"],
             trim: true,
@@ -69,13 +69,13 @@ userSchema.pre("save", async function(next) {
 })
 
 // create a schem method to check password
-userSchema.method.isPasswordCorrect = async function(password) {
+userSchema.methods.isPasswordCorrect = async function(password) {
     // compare changed password with saved db password
     return await bcrypt.compare(password, this.password);
 }
 
 // create a schema method to generate access tokens
-userSchema.method.generateAccessToken = function() {
+userSchema.methods.generateAccessToken = function() {
     // generate token with _id, email, username, fullName
     return jwt.sign({
         _id: this._id,
@@ -84,19 +84,19 @@ userSchema.method.generateAccessToken = function() {
         fullName: this.fullName
     },
     process.env.ACCESS_TOKEN_SECRET,
-    {expiresIn: [process.env.ACCESS_TOKEN_EXPIRY]});
+    {expiresIn: process.env.ACCESS_TOKEN_EXPIRY});
 }
 
 // create a schema method to refresh token
-userSchema.method.refreshToken = function() {
+userSchema.methods.generateRefreshToken = function() {
     // generate token with _id
     return jwt.sign({
         _id: this._id
     },
     process.env.REFRESH_TOKEN_SECRET,
-    {expiresIn: REFRESH_TOKEN_EXPIRY})
+    {expiresIn: process.env.REFRESH_TOKEN_EXPIRY})
 }
 
 const User = model('User', userSchema)
 
-model.exports = User;
+module.exports = User;
