@@ -34,11 +34,6 @@ router
   .route('/')
   .get(getAllUsers)
   .post(uploadUserImage, resizeImage, createUserValidator, createUser)
-router
-  .route('/:id')
-  .get(getUserValidator, getUser)
-  .put(uploadUserImage, resizeImage, updateUserValidator, updateUser)
-  .delete(deleteUserValidator, deleteUser)
 
 // user
 router.use(isLoggedIn)
@@ -54,5 +49,11 @@ router.put(
   changeUserPasswordValidator,
   changeUserPassword
 )
+
+router
+  .route('/u/:id')
+  .get(getUserValidator, getUser)
+  .put(uploadUserImage, resizeImage, updateUserValidator, updateUser)
+  .delete(deleteUserValidator, deleteUser)
 
 module.exports = router

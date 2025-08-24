@@ -53,6 +53,33 @@ exports.login = asyncHandler(async (req, res, next) => {
         })
 })
 
+// @desc    Logout
+// @route   GET /api/v1/auth/logout
+// @access  Public
+exports.logout = asyncHandler(async (req, res) => {
+    // get user from middleware
+    const user = req.user._id;
+
+    // remove refresh token from user db
+    await User.findByIdAndUpdate(user,
+        {
+            $unset: {
+                refreshToken: 1 // this removes the field from document
+            }
+        },
+        {
+            new: true
+        }
+    );
+
+    // clear cookies and send response
+    return res
+        .status(200)
+        .clearCookie("accessToken", cookieOptions)
+        .clearCookie("refreshToken", cookieOptions)
+        .json({data: {}});
+})
+
 // @desc    Forgot password
 // @route   POST /api/v1/auth/forgotPassword
 // @access  Public

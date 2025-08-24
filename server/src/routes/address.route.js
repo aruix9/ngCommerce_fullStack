@@ -1,19 +1,22 @@
-// const express = require('express');
+const express = require('express');
 
-// const authService = require('../controllers/auth.controller');
+const {
+    isLoggedIn,
+    accessRouteAs
+} = require('../middlewares/auth.middleware');
 
-// const {
-//   addAddress,
-//   removeAddress,
-//   getLoggedUserAddresses,
-// } = require('../controllers/address.controller');
+const {
+  addAddress,
+  removeAddress,
+  getLoggedUserAddresses,
+} = require('../controllers/address.controller');
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.use(authService.protect, authService.allowedTo('user'));
+router.use(isLoggedIn, accessRouteAs('user'));
 
-// router.route('/').post(addAddress).get(getLoggedUserAddresses);
+router.route('/').post(addAddress).get(getLoggedUserAddresses);
 
-// router.delete('/:addressId', removeAddress);
+router.delete('/:addressId', removeAddress);
 
-// module.exports = router;
+module.exports = router;
