@@ -1,58 +1,61 @@
-// const express = require('express');
+const express = require('express');
 
-// const {
-//   getCategoryValidator,
-//   createCategoryValidator,
-//   updateCategoryValidator,
-//   deleteCategoryValidator,
-// } = require('../utils/validators/category.validator');
+const {
+    getCategoryValidator,
+    createCategoryValidator,
+    updateCategoryValidator,
+    deleteCategoryValidator,
+} = require('../utils/validators/category.validator');
 
-// const {
-//   getCategories,
-//   getCategory,
-//   createCategory,
-//   updateCategory,
-//   deleteCategory,
-//   uploadCategoryImage,
-//   resizeImage,
-// } = require('../controllers/category.controller');
+const {
+    getCategories,
+    getCategory,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+    uploadCategoryImage,
+    resizeImage
+} = require('../controllers/category.controller');
 
-// const authService = require('../controllers/auth.controller');
+const {
+    isLoggedIn,
+    accessRouteAs
+} = require("../middlewares/auth.middleware")
 
-// const subcategoriesRoute = require('./subCategoryRoute');
+const subcategoriesRoute = require('./subCategory.route');
 
-// const router = express.Router();
+const router = express.Router();
 
-// // Nested route
-// router.use('/:categoryId/subcategories', subcategoriesRoute);
+// Nested route
+router.use('/:categoryId/subcategories', subcategoriesRoute);
 
-// router
-//   .route('/')
-//   .get(getCategories)
-//   .post(
-//     authService.protect,
-//     authService.allowedTo('admin', 'manager'),
-//     uploadCategoryImage,
-//     resizeImage,
-//     createCategoryValidator,
-//     createCategory
-//   );
-// router
-//   .route('/:id')
-//   .get(getCategoryValidator, getCategory)
-//   .put(
-//     authService.protect,
-//     authService.allowedTo('admin', 'manager'),
-//     uploadCategoryImage,
-//     resizeImage,
-//     updateCategoryValidator,
-//     updateCategory
-//   )
-//   .delete(
-//     authService.protect,
-//     authService.allowedTo('admin'),
-//     deleteCategoryValidator,
-//     deleteCategory
-//   );
+router
+    .route('/')
+    .get(getCategories)
+    .post(
+        isLoggedIn,
+        accessRouteAs('admin', 'manager'),
+        uploadCategoryImage,
+        resizeImage,
+        createCategoryValidator,
+        createCategory
+    );
+router
+  .route('/:id')
+  .get(getCategoryValidator, getCategory)
+  .put(
+    isLoggedIn,
+    accessRouteAs('admin', 'manager'),
+    uploadCategoryImage,
+    resizeImage,
+    updateCategoryValidator,
+    updateCategory
+  )
+  .delete(
+    isLoggedIn,
+    accessRouteAs('admin'),
+    deleteCategoryValidator,
+    deleteCategory
+  );
 
-// module.exports = router;
+module.exports = router;

@@ -1,10 +1,10 @@
 const express = require('express');
+
 const {
     isLoggedIn,
     accessRouteAs
 } = require("../middlewares/auth.middleware")
-const {
-} = require("../middlewares/uploadImage.middleware")
+
 const {
   getBrandValidator,
   createBrandValidator,
