@@ -1,19 +1,22 @@
-// const express = require('express');
+const express = require('express');
 
-// const authService = require('../controllers/auth.controller');
+const {
+    isLoggedIn,
+    accessRouteAs
+} = require("../middlewares/auth.middleware")
 
-// const {
-//   addProductToWishlist,
-//   removeProductFromWishlist,
-//   getLoggedUserWishlist,
-// } = require('../controllers/wishlist.controller');
+const {
+  addProductToWishlist,
+  removeProductFromWishlist,
+  getLoggedUserWishlist,
+} = require('../controllers/wishlist.controller');
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.use(authService.protect, authService.allowedTo('user'));
+router.use(isLoggedIn, accessRouteAs('user'));
 
-// router.route('/').post(addProductToWishlist).get(getLoggedUserWishlist);
+router.route('/').post(addProductToWishlist).get(getLoggedUserWishlist);
 
-// router.delete('/:productId', removeProductFromWishlist);
+router.delete('/:productId', removeProductFromWishlist);
 
-// module.exports = router;
+module.exports = router;
