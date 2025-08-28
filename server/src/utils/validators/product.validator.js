@@ -15,8 +15,6 @@ exports.createProductValidator = [
             return true;
         }),
     check('description')
-        .notEmpty()
-        .withMessage('Product description is required')
         .isLength({ max: 2000 })
         .withMessage('Too long description'),
     check('quantity')

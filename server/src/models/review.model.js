@@ -1,7 +1,7 @@
 const {model, Schema} = require("mongoose");
 const Product = require("./product.model");
 
-const reviewScehma = new Schema(
+const reviewSchema = new Schema(
     {
         title: {
             type: String,
@@ -70,4 +70,6 @@ reviewSchema.post('remove', async function () {
     await this.constructor.calcAverageRatingsAndQuantity(this.product);
 });
 
-module.exports = model('Review', reviewSchema);
+const Review = model("Review", reviewSchema);
+
+module.exports = Review;

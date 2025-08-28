@@ -39,10 +39,10 @@ const productSchema = new Schema(
             trim: true
         },
         priceAfterDiscount: {
-        type: Number,
+            type: Number,
         },
         colors: [String],
-        coverImage: {
+        imageCover: {
             type: String,
             required: [true, 'Product cove image is required'],
         },
@@ -87,7 +87,7 @@ productSchema.virtual("reviews", {
 
 productSchema.pre(/^find/, function(next) {
     this.populate({
-        patch: "category",
+        path: "category",
         select: 'name -_id'
     })
 

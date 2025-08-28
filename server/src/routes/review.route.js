@@ -1,50 +1,53 @@
-// const express = require('express');
+const express = require('express');
 
-// const {
-//   createReviewValidator,
-//   updateReviewValidator,
-//   getReviewValidator,
-//   deleteReviewValidator,
-// } = require('../utils/validators/review.validator');
+const {
+  createReviewValidator,
+  updateReviewValidator,
+  getReviewValidator,
+  deleteReviewValidator,
+} = require('../utils/validators/review.validator');
 
-// const {
-//   getReview,
-//   getReviews,
-//   createReview,
-//   updateReview,
-//   deleteReview,
-//   createFilterObj,
-//   setProductIdAndUserIdToBody,
-// } = require('../controllers/review.controller');
+const {
+  getReview,
+  getReviews,
+  createReview,
+  updateReview,
+  deleteReview,
+  createFilterObj,
+  setProductIdAndUserIdToBody,
+} = require('../controllers/review.controller');
 
-// const authService = require('../controllers/auth.controller');
+const {
+    isLoggedIn,
+    accessRouteAs
+} = require("../middlewares/auth.middleware")
 
-// const router = express.Router({ mergeParams: true });
+const router = express.Router({ mergeParams: true });
 
-// router
-//   .route('/')
-//   .get(createFilterObj, getReviews)
-//   .post(
-//     authService.protect,
-//     authService.allowedTo('user'),
-//     setProductIdAndUserIdToBody,
-//     createReviewValidator,
-//     createReview
-//   );
-// router
-//   .route('/:id')
-//   .get(getReviewValidator, getReview)
-//   .put(
-//     authService.protect,
-//     authService.allowedTo('user'),
-//     updateReviewValidator,
-//     updateReview
-//   )
-//   .delete(
-//     authService.protect,
-//     authService.allowedTo('user', 'manager', 'admin'),
-//     deleteReviewValidator,
-//     deleteReview
-//   );
+router
+  .route('/')
+  .get(createFilterObj, getReviews)
+  .post(
+    isLoggedIn,
+    accessRouteAs('user'),
+    setProductIdAndUserIdToBody,
+    createReviewValidator,
+    createReview
+  );
+router
+  .route('/:id')
+  .get(getReviewValidator, getReview)
+  .put(
+    isLoggedIn,
+    accessRouteAs('user'),
+    updateReviewValidator,
+    updateReview
+  )
+  .delete(
+    isLoggedIn,
+    accessRouteAs('user', 'manager', 'admin'),
+    deleteReviewValidator,
+    deleteReview
+  );
 
-// module.exports = router;
+module.exports = router;
