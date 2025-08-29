@@ -8,7 +8,6 @@ const {
   deleteCoupon,
 } = require('../controllers/coupon.controller');
 
-
 const {
     isLoggedIn,
     accessRouteAs
