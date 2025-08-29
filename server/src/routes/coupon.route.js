@@ -1,20 +1,24 @@
-// const express = require('express');
+const express = require('express');
 
-// const {
-//   getCoupon,
-//   getCoupons,
-//   createCoupon,
-//   updateCoupon,
-//   deleteCoupon,
-// } = require('../controllers/coupon.controller');
+const {
+  getCoupon,
+  getCoupons,
+  createCoupon,
+  updateCoupon,
+  deleteCoupon,
+} = require('../controllers/coupon.controller');
 
-// const authService = require('../controllers/auth.controller');
 
-// const router = express.Router();
+const {
+    isLoggedIn,
+    accessRouteAs
+} = require("../middlewares/auth.middleware")
 
-// router.use(authService.protect, authService.allowedTo('admin', 'manager'));
+const router = express.Router();
 
-// router.route('/').get(getCoupons).post(createCoupon);
-// router.route('/:id').get(getCoupon).put(updateCoupon).delete(deleteCoupon);
+router.use(isLoggedIn, accessRouteAs('admin', 'manager'));
 
-// module.exports = router;
+router.route('/').get(getCoupons).post(createCoupon);
+router.route('/:id').get(getCoupon).put(updateCoupon).delete(deleteCoupon);
+
+module.exports = router;
